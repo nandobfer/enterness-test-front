@@ -1,0 +1,90 @@
+
+@font-face {
+    font-family: Montserrat;
+    src: url("/fonts/Montserrat-Regular.ttf") ;
+}
+
+@font-face {
+    font-family: Montserrat;
+    src: url("/fonts/Montserrat-Bold.ttf") ;
+    font-weight: bold;
+}
+
+
+.MuiList-root {
+    width: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Montserrat;
+}
+
+.MuiTextField-root {
+    width: 100%;
+}
+
+#root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+form {
+    display: contents;
+    width: 100%;
+}
+
+html {
+    scroll-behavior: smooth;
+    height: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    height: 100%;
+}
+
+
+section {
+    display: contents;
+}
+
+.MuiPaper-root {
+    display: flex;
+    flex-shrink: 0
+}
+
+.MuiBox-root {
+    display: flex;
+    flex-shrink: 0
+}
+
+img {
+    object-fit: contain;
+}
+
+.MuiTab-root {
+    text-transform: none!important;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::selection {
+    color: white;
+}
+
+.link {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
