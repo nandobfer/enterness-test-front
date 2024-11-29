@@ -59,12 +59,34 @@ export const LoginModal: React.FC<LoginModalProps> = ({  }) => {
     }, [username])
     
     return (
-        <Dialog open={!user.current} >
+        <Dialog
+            open={!user.current}
+            PaperProps={{ sx: { bgcolor: "background.default" } }}
+            slotProps={{ backdrop: { sx: { backdropFilter: "blur(5px)", background: "transparent" } } }}
+        >
             <DialogTitle>Escolha um nome de usuário</DialogTitle>
-            <DialogContent sx={{display: 'flex', flexDirection: 'column', gap: '1vw'}}>
+            <DialogContent sx={{ display: "flex", flexDirection: "column", gap: "1vw" }}>
                 <DialogContentText>Por favor, digite um nome de usuário para se conectar.</DialogContentText>
-                <TextField label='nome de usuário' onChange={(ev) => setUsername(ev.target.value)} slotProps={{input: {endAdornment: checking ? <CircularProgress size='1.5rem' /> : error ? <Error color='error' /> : valid ? <CheckCircle color='success' /> : undefined}}} error={!!error} helperText={error} />
-                <Button sx={{alignSelf: 'flex-end'}} variant='contained' onClick={submitUsername} disabled={!!error || !username || !valid}>{submiting ?  <CircularProgress size='1.5rem' color='inherit' /> :'confirmar'}</Button>
+                <TextField
+                    label="nome de usuário"
+                    onChange={(ev) => setUsername(ev.target.value)}
+                    slotProps={{
+                        input: {
+                            endAdornment: checking ? (
+                                <CircularProgress size="1.5rem" />
+                            ) : error ? (
+                                <Error color="error" />
+                            ) : valid ? (
+                                <CheckCircle color="success" />
+                            ) : undefined,
+                        },
+                    }}
+                    error={!!error}
+                    helperText={error}
+                />
+                <Button sx={{ alignSelf: "flex-end" }} variant="contained" onClick={submitUsername} disabled={!!error || !username || !valid}>
+                    {submiting ? <CircularProgress size="1.5rem" color="inherit" /> : "confirmar"}
+                </Button>
             </DialogContent>
         </Dialog>
     )

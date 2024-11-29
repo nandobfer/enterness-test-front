@@ -2,6 +2,7 @@ import {  useContext } from "react"
 import UserContext from "../contexts/userContext"
 import { User, UserForm } from "../types/class/User"
 import { api } from "../backend"
+import { Chat, ChatForm } from "../types/class/Chat"
 
 export const useUser = () => {
     const context = useContext(UserContext)
@@ -15,19 +16,30 @@ export const useUser = () => {
         }
 
         async checkUsername(username: string) {
-            const response = await api.get('/users/username', {params: {username}})
+            const response = await api.get("/users/username", { params: { username } })
             const is_valid = response.data.valid as boolean
             return is_valid
         }
 
         async login(username: string) {
-            const data: UserForm = {username}
-            const response = await api.post('/users', data)
+            const data: UserForm = { username }
+            const response = await api.post("/users", data)
             const user = response.data as User
             return user
         }
 
-    } 
+        async createChat(data: ChatForm) {
+            const response = await api.post("/chats", data)
+            const chat = response.data as Chat
+            return chat
+        }
+
+        async getChats() {
+            const response = await api.get("/chats/user", { params: { user_id: this.current?.id } })
+            const chats = response.data as Chat[]
+            return chats
+        }
+    }
 
     return { user: new UserHelper() }
 }

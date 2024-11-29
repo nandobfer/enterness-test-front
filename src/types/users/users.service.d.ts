@@ -4,4 +4,5 @@ export declare class UsersService {
     new(data: UserForm): User;
     getAll(): User[];
     findById(id: string): User;
+    findByUsername(username: string): User;
 }
