@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react"
 import { Box } from "@mui/material"
 import { useUser } from "../../../hooks/useUser"
 import { Chat } from "../../../types/class/Chat"
-import { ChatItem } from "../ChatItem"
+import { ChatItem } from "./UserChatItem"
+import { useIo } from "../../../hooks/useIo"
 
 interface UserChatsProps {}
 
 export const UserChats: React.FC<UserChatsProps> = ({}) => {
     const { user } = useUser()
+    const io = useIo()
 
     const [chats, setChats] = useState<Chat[]>([])
+
+    const addChat = (chat: Chat) => setChats((chats) => [...chats.filter((item) => item.id !== chat.id), chat])
 
     const onChatClick = (chat: Chat) => {}
 
@@ -25,6 +29,12 @@ export const UserChats: React.FC<UserChatsProps> = ({}) => {
     useEffect(() => {
         if (user.current) {
             fetchChats()
+
+            io.on("chats:new", (chat: Chat) => addChat(chat))
+
+            return () => {
+                io.off("chats:new")
+            }
         }
     }, [user.current])
 

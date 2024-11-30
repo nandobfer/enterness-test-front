@@ -17,7 +17,7 @@ export const ChatList: React.FC<ChatListProps> = ({}) => {
 
             <Grid2 container columns={3} sx={{ flex: 3 / 4 }}>
                 {chats.map((chat) => (
-                    <Grid2 key={chat.id}>
+                    <Grid2 key={chat.id} size={1}>
                         <ChatListItem chat={chat} />
                     </Grid2>
                 ))}

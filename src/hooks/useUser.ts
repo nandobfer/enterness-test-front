@@ -3,9 +3,11 @@ import UserContext from "../contexts/userContext"
 import { User, UserForm } from "../types/class/User"
 import { api } from "../backend"
 import { Chat, ChatForm } from "../types/class/Chat"
+import { useIo } from "./useIo"
 
 export const useUser = () => {
     const context = useContext(UserContext)
+    const io = useIo()
 
     class UserHelper {
         current: User | null = context.user
@@ -23,9 +25,12 @@ export const useUser = () => {
 
         async login(username: string) {
             const data: UserForm = { username }
-            const response = await api.post("/users", data)
-            const user = response.data as User
-            return user
+
+            const promise: Promise<User> = new Promise((resolve) => {
+                io.emit("users:new", data, (user: User) => resolve(user))
+            })
+
+            return promise
         }
 
         async createChat(data: ChatForm) {
