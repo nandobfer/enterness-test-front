@@ -15,21 +15,17 @@ export const Providers:React.FC<ProvidersProps> = ({ children }) => {
 
     return (
         <ThemeProvider theme={mui_theme}>
-
             <SnackbarProvider>
-
-            <IoProvider>
-                <UserProvider>
-                    <BrowserRouter>
-                    <Box sx={{flex: 1, bgcolor: 'background.default', padding: '3vw', }}>
-                    <Paper  sx={{flex: 1, borderTopRightRadius: '2vw', borderBottomLeftRadius: '2vw'}}>
-                        {children}
-                    </Paper>
-                    </Box>
-                </BrowserRouter>
-                </UserProvider>
-            </IoProvider>
-        </SnackbarProvider>
+                <IoProvider>
+                    <UserProvider>
+                        <BrowserRouter>
+                            <Box sx={{ flex: 1, bgcolor: "background.default", padding: "3vw" }}>
+                                <Paper sx={{ flex: 1, borderTopRightRadius: "2vw", borderBottomLeftRadius: "2vw" }}>{children}</Paper>
+                            </Box>
+                        </BrowserRouter>
+                    </UserProvider>
+                </IoProvider>
+            </SnackbarProvider>
         </ThemeProvider>
     )
 }

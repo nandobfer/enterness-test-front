@@ -13,7 +13,7 @@ export const UserFrame: React.FC<UserFrameProps> = ({}) => {
         <Paper sx={{ flex: 1 / 6, borderBottomLeftRadius: "2vw", flexDirection: "column", padding: "2vw", gap: "2vw" }}>
             <Box sx={{ flexDirection: "column", alignItems: "center", gap: "1vw" }}>
                 <Avatar sx={{ color: "primary.main", bgcolor: "secondary.main", width: "5vw", height: "auto", aspectRatio: "1/1" }} />
-                <Typography sx={{ fontWeight: "bold" }}>{user.current?.username}</Typography>
+                <Typography sx={{ fontWeight: "bold", color: "primary.main" }}>{user.current?.username}</Typography>
             </Box>
 
             <Box sx={{ flexDirection: "column", gap: "1vw" }}>

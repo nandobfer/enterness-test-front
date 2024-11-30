@@ -27,6 +27,7 @@ export const ChatFormContainer: React.FC<ChatFormContainerProps> = ({ onSuccess 
                 const data: ChatForm = { ...values, password: values.password || undefined }
                 const chat = await user.createChat(data)
                 onSuccess(chat)
+                formik.resetForm()
             } catch (error) {
                 console.log(error)
             } finally {
@@ -41,7 +42,7 @@ export const ChatFormContainer: React.FC<ChatFormContainerProps> = ({ onSuccess 
     }, [isPrivate])
 
     return (
-        <Paper sx={{ flexDirection: "column", padding: "2vw", flex: 1 / 4, gap: "1vw" }}>
+        <Paper sx={{ flexDirection: "column", padding: "2vw", flex: 1 / 3, gap: "1vw" }}>
             <Title name="Criar sala" />
 
             <form onSubmit={formik.handleSubmit}>

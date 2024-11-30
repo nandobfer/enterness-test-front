@@ -12,6 +12,8 @@ export declare class Chat {
     messages: Message[];
     owner: User;
     users: User[];
+    lastMessage?: Message;
     password?: string;
     constructor(data: WithoutFunctions<Chat>);
+    handleOwnerDisconnect(): void;
 }
