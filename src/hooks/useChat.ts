@@ -50,6 +50,7 @@ export const useChat = (initialChat: Chat) => {
             body: text,
             chat_id: chat.id,
             user_id: user.current.id,
+            username: user.current.username,
         }
 
         io.emit("chat:message", data)
