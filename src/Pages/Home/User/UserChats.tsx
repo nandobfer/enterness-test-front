@@ -15,7 +15,6 @@ export const UserChats: React.FC<UserChatsProps> = ({}) => {
 
     const addChat = (chat: Chat) => setChats((chats) => [...chats.filter((item) => item.id !== chat.id), chat])
 
-    const onChatClick = (chat: Chat) => {}
 
     const fetchChats = async () => {
         try {
@@ -41,7 +40,7 @@ export const UserChats: React.FC<UserChatsProps> = ({}) => {
     return (
         <Box sx={{ flexDirection: "column", margin: "0 -2vw" }}>
             {chats.map((chat) => (
-                <ChatItem chat={chat} key={chat.id} onClick={() => onChatClick(chat)} />
+                <ChatItem chat={chat} key={chat.id} />
             ))}
         </Box>
     )
