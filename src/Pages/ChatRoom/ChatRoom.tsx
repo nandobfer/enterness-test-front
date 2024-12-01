@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from "react"
-import { Box, IconButton } from "@mui/material"
-import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { Chat } from "../../types/class/Chat"
-import { api } from "../../backend"
-import { ArrowBackIos } from "@mui/icons-material"
-import { useIo } from "../../hooks/useIo"
+import { Box, Paper, TextField } from "@mui/material"
+import { useLocation } from "react-router-dom"
 import { useChat } from "../../hooks/useChat"
+import { ChatHeader } from "./ChatHeader"
 
 interface ChatRoomProps {}
 
 export const ChatRoom: React.FC<ChatRoomProps> = ({}) => {
     const location = useLocation()
-    const navigate = useNavigate()
-    const io = useIo()
-    const { chat } = useChat(location.state.chat)
+    const { chat, checkUser, onLeaveChat } = useChat(location.state.chat)
 
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {}, [])
+    useEffect(() => {
+        checkUser()
+    }, [])
 
     return (
-        <Box sx={{}}>
-            <IconButton onClick={() => navigate("/")}>
-                <ArrowBackIos />
-            </IconButton>
-            {chat.data.name}
+        <Box sx={{ flex: 1, flexDirection: "column", margin: "-2vw", padding: "1vw", borderTopRightRadius: "2vw", gap: "1vw" }}>
+            <ChatHeader chat={chat} onLeave={onLeaveChat} />
+            <Paper sx={{ flex: 1, borderTopRightRadius: "2vw", borderBottomLeftRadius: "2vw" }}></Paper>
+            <TextField />
         </Box>
     )
 }

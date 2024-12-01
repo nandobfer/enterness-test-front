@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Message } from "../types/class/Message"
 import { useIo } from "./useIo"
 import { useUser } from "./useUser"
+import { api } from "../backend"
 
 export const useChat = (initialChat: Chat) => {
     const navigate = useNavigate()
@@ -14,31 +15,40 @@ export const useChat = (initialChat: Chat) => {
 
     const join = (chat: Chat) => {
         navigate(`/chat?id=${chat.id}`, { state: { chat } })
-        helper.onJoin()
+
+        if (!user.current) return
+
+        const data: ChatJoinForm = { chat_id: chat.id, user_id: user.current.id }
+        io.emit("chat:join", data)
     }
 
-    class ChatHelper {
-        data = chat
-
-        onJoin() {
-            if (!user.current) return
-
-            const data: ChatJoinForm = { chat_id: chat.id, user_id: user.current.id }
-            io.emit("chat:join", data)
-        }
-
-        onMessage(message: Message) {
-            this.data.messages.push(message)
-        }
+    const addMessage = (message: Message) => {
+        const newChat = chat
+        newChat.messages.push(message)
+        setChat(newChat)
     }
 
-    const helper = new ChatHelper()
+    const checkUser = () => {
+        if (!user.current) navigate("/")
+    }
+
+    const onLeaveChat = async () => {
+        if (!user.current) return
+        navigate("/")
+        const data: ChatJoinForm = { chat_id: chat.id, user_id: user.current?.id }
+        const response = await api.delete("/chats/user", { params: data })
+        return response.data
+    }
 
     useEffect(() => {
         io.on("chat:message", (message: Message) => {
-            helper.onMessage(message)
+            addMessage(message)
         })
     }, [chat])
 
-    return { join, chat: helper }
+    useEffect(() => {
+        setChat(initialChat)
+    }, [initialChat])
+
+    return { join, chat, checkUser, onLeaveChat }
 }

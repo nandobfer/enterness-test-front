@@ -17,6 +17,7 @@ export const UserChats: React.FC<UserChatsProps> = ({}) => {
     const [chats, setChats] = useState<Chat[]>([])
 
     const addChat = (chat: Chat) => setChats((chats) => [...chats.filter((item) => item.id !== chat.id), chat])
+    const removeChat = (chat_id: string) => setChats((chats) => chats.filter((item) => item.id !== chat_id))
 
     const fetchChats = async () => {
         try {
@@ -32,9 +33,11 @@ export const UserChats: React.FC<UserChatsProps> = ({}) => {
             fetchChats()
 
             io.on("chats:new", (chat: Chat) => addChat(chat))
+            io.on("chats:unjoin", (chat_id: string) => removeChat(chat_id))
 
             return () => {
                 io.off("chats:new")
+                io.off("chats:unjoin")
             }
         }
     }, [user.current])
