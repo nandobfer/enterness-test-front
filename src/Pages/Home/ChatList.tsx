@@ -5,16 +5,19 @@ import { Chat } from "../../types/class/Chat"
 import { ChatListItem } from "./ChatListItem"
 import { api } from "../../backend"
 import { useUser } from "../../hooks/useUser"
+import { useIo } from "../../hooks/useIo"
 
 interface ChatListProps {}
 
 export const ChatList: React.FC<ChatListProps> = ({}) => {
     const { user } = useUser()
+    const io = useIo()
 
     const [chats, setChats] = useState<Chat[]>([])
     const [loading, setLoading] = useState(true)
 
     const addChat = (chat: Chat) => setChats((chats) => [...chats.filter((item) => item.id !== chat.id), chat])
+    const removeChat = (chat_id: string) => setChats((chats) => chats.filter((item) => item.id !== chat_id))
 
     const fetchChats = async () => {
         setLoading(true)
@@ -31,6 +34,16 @@ export const ChatList: React.FC<ChatListProps> = ({}) => {
 
     useEffect(() => {
         fetchChats()
+
+        if (user.current) {
+            io.on("chats:new", (chat: Chat) => addChat(chat))
+            io.on("chats:delete", (chat_id: string) => removeChat(chat_id))
+
+            return () => {
+                io.off("chats:new")
+                io.off("chats:delete")
+            }
+        }
     }, [user.current])
 
     return (

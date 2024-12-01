@@ -32,11 +32,11 @@ export const UserChats: React.FC<UserChatsProps> = ({}) => {
         if (user.current) {
             fetchChats()
 
-            io.on("chats:new", (chat: Chat) => addChat(chat))
+            io.on("chats:join", (chat: Chat) => addChat(chat))
             io.on("chats:unjoin", (chat_id: string) => removeChat(chat_id))
 
             return () => {
-                io.off("chats:new")
+                io.off("chats:join")
                 io.off("chats:unjoin")
             }
         }
