@@ -1,6 +1,19 @@
-import { WithoutFunctions } from "src/helpers";
 import { Message } from "./Message";
 import { User } from "./User";
+import { Prisma } from "@prisma/client";
+export declare const chat_prisma_include: {
+    users: true;
+    messages: true;
+    owner: true;
+    lastMessage: true;
+};
+export type ChatPrisma = Prisma.ChatGetPayload<{
+    include: typeof chat_prisma_include;
+}>;
+export declare class ChatJoinForm {
+    chat_id: string;
+    user_id: string;
+}
 export declare class ChatForm {
     owner_id: string;
     name: string;
@@ -14,6 +27,6 @@ export declare class Chat {
     users: User[];
     lastMessage?: Message;
     password?: string;
-    constructor(data: WithoutFunctions<Chat>);
-    handleOwnerDisconnect(): void;
+    constructor(data: ChatPrisma);
+    handleOwnerLeave(): void;
 }

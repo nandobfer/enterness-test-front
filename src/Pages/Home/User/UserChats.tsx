@@ -4,17 +4,19 @@ import { useUser } from "../../../hooks/useUser"
 import { Chat } from "../../../types/class/Chat"
 import { ChatItem } from "./UserChatItem"
 import { useIo } from "../../../hooks/useIo"
+import { useSearchParams } from "react-router-dom"
 
 interface UserChatsProps {}
 
 export const UserChats: React.FC<UserChatsProps> = ({}) => {
+    const [searchParams] = useSearchParams()
+    const current_chat_id = searchParams.get("id")
     const { user } = useUser()
     const io = useIo()
 
     const [chats, setChats] = useState<Chat[]>([])
 
     const addChat = (chat: Chat) => setChats((chats) => [...chats.filter((item) => item.id !== chat.id), chat])
-
 
     const fetchChats = async () => {
         try {
@@ -40,7 +42,7 @@ export const UserChats: React.FC<UserChatsProps> = ({}) => {
     return (
         <Box sx={{ flexDirection: "column", margin: "0 -2vw" }}>
             {chats.map((chat) => (
-                <ChatItem chat={chat} key={chat.id} />
+                <ChatItem chat={chat} key={chat.id} active={current_chat_id === chat.id} />
             ))}
         </Box>
     )

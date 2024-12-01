@@ -5,10 +5,15 @@ import { useChat } from "../../../hooks/useChat"
 
 interface ChatItemProps {
     chat: Chat
+    active?: boolean
 }
 
-export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
-    const { join } = useChat()
+export const ChatItem: React.FC<ChatItemProps> = ({ chat, active }) => {
+    const { join } = useChat(chat)
 
-    return <MenuItem onClick={() => join(chat)}>{chat.name}</MenuItem>
+    return (
+        <MenuItem sx={active ? { bgcolor: "primary.main", pointerEvents: "none" } : undefined} onClick={() => join(chat)}>
+            {chat.name}
+        </MenuItem>
+    )
 }

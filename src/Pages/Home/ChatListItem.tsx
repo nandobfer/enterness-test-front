@@ -10,7 +10,7 @@ interface ChatListItemProps {
 }
 
 export const ChatListItem: React.FC<ChatListItemProps> = ({ chat }) => {
-    const { join } = useChat()
+    const { join } = useChat(chat)
 
     return (
         <Paper sx={{ padding: "1vw", flexDirection: "column", gap: "1vw" }}>

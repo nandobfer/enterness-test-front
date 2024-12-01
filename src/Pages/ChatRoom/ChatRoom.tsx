@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from "react"
-import { Box } from "@mui/material"
-import { useLocation, useParams } from "react-router-dom"
+import { Box, IconButton } from "@mui/material"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { Chat } from "../../types/class/Chat"
 import { api } from "../../backend"
+import { ArrowBackIos } from "@mui/icons-material"
+import { useIo } from "../../hooks/useIo"
+import { useChat } from "../../hooks/useChat"
 
 interface ChatRoomProps {}
 
 export const ChatRoom: React.FC<ChatRoomProps> = ({}) => {
     const location = useLocation()
+    const navigate = useNavigate()
+    const io = useIo()
+    const { chat } = useChat(location.state.chat)
 
-    const [chat, setChat] = useState<Chat>(location.state.chat)
     const [loading, setLoading] = useState(true)
 
-    const fetchChat = async () => {
-        setLoading(true)
-        try {
-            const response = await api.get("/chats", { params: { chat_id: chat.id } })
-            setChat(response.data)
-        } catch (error) {
-            console.log(error)
-        } finally {
-            setLoading(false)
-        }
-    }
+    useEffect(() => {}, [])
 
-    useEffect(() => {
-        // fetchChat()
-    }, [])
-
-    return <Box sx={{}}>{chat.name}</Box>
+    return (
+        <Box sx={{}}>
+            <IconButton onClick={() => navigate("/")}>
+                <ArrowBackIos />
+            </IconButton>
+            {chat.data.name}
+        </Box>
+    )
 }

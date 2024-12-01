@@ -3,7 +3,7 @@ import { ChatForm } from "src/class/Chat";
 export declare class ChatsController {
     private service;
     constructor(service: ChatsService);
-    getAll(): import("src/class/Chat").Chat[];
-    createChat(data: ChatForm): import("src/class/Chat").Chat;
-    getUserChats(user_id: string): import("src/class/Chat").Chat[];
+    getAll(): Promise<import("src/class/Chat").Chat[]>;
+    createChat(data: ChatForm): Promise<import("src/class/Chat").Chat>;
+    getUserChats(user_id: string): Promise<import("src/class/Chat").Chat[]>;
 }
