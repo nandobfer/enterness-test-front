@@ -27,7 +27,7 @@ export const useUser = () => {
             const data: UserForm = { username }
 
             const promise: Promise<User> = new Promise((resolve) => {
-                io.emit("users:new", data, (user: User) => resolve(user))
+                io.emit("users:login", data, (user: User) => resolve(user))
             })
 
             return promise
