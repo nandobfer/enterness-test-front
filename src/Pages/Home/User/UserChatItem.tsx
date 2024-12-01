@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, MenuItem } from "@mui/material"
+import { MenuItem } from "@mui/material"
 import { Chat } from "../../../types/class/Chat"
 import { useChat } from "../../../hooks/useChat"
 

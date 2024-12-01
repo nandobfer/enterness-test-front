@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, IconButton, TextField } from "@mui/material"
+import { IconButton, TextField } from "@mui/material"
 import { Send } from "@mui/icons-material"
 
 interface MessageInputProps {

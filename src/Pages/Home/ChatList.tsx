@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Grid2, LinearProgress } from "@mui/material"
+import { Box, LinearProgress } from "@mui/material"
 import { ChatFormContainer } from "./ChatFormContainer"
 import { Chat } from "../../types/class/Chat"
 import { ChatListItem } from "./ChatListItem"

@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material"
 import { Chat } from "../../types/class/Chat"
-import { useUser } from "../../hooks/useUser"
 
 interface ChatPasswordModalProps {
     chat: Chat
@@ -11,8 +10,6 @@ interface ChatPasswordModalProps {
 }
 
 export const ChatPasswordModal: React.FC<ChatPasswordModalProps> = ({ chat, opened, handleClose, onSuccess }) => {
-    const { user } = useUser()
-
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
 

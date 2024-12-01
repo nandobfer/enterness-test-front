@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import {Box, Button, CircularProgress, debounce, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from '@mui/material'
+import { Button, CircularProgress, debounce, Dialog, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material"
 import { useUser } from '../../hooks/useUser'
 import { CheckCircle, Error } from '@mui/icons-material'
 import { useFormik } from "formik"
@@ -17,7 +17,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({}) => {
 
     const formik = useFormik<UserForm>({
         initialValues: { username: "" },
-        async onSubmit(values, formikHelpers) {
+        async onSubmit(values) {
             if (submiting || !valid || error) return
             setSubmiting(true)
 

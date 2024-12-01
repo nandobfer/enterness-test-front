@@ -1,4 +1,3 @@
-type Months = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 11 | 12
 type Days = 1 | 2 | 3 | 4 | 5 | 6 | 7
 
 const weekdaysLong = {
@@ -14,8 +13,6 @@ const weekdaysLong = {
 export const formatDate = (date: Date, mode: "date-only" | "date-hours" = "date-hours") => {
     const now = new Date()
     const weekDay = (date.getDay() + 1) as Days
-    const todayDate = now.getDate()
-    const dateDate = date.getDate()
     const diffInDays = (now.getTime() - date.getTime()) / (1000 * 3600 * 24)
 
     if (date.toDateString() === now.toDateString()) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, CircularProgress, FormControlLabel, IconButton, Paper, Switch, TextField } from "@mui/material"
+import { Button, CircularProgress, FormControlLabel, IconButton, Paper, Switch, TextField } from "@mui/material"
 import { useUser } from "../../hooks/useUser"
 import { useFormik } from "formik"
 import { Chat, ChatForm } from "../../types/class/Chat"
@@ -19,7 +19,7 @@ export const ChatFormContainer: React.FC<ChatFormContainerProps> = ({ onSuccess 
 
     const formik = useFormik<ChatForm>({
         initialValues: { name: "", password: "", owner_id: user.current?.id || "" },
-        async onSubmit(values, formikHelpers) {
+        async onSubmit(values) {
             if (loading || !formik.values.name || !formik.values.owner_id || (isPrivate && !formik.values.password)) return
             setLoading(true)
 

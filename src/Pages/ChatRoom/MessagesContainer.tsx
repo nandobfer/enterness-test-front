@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react"
-import { Box, Paper } from "@mui/material"
+import { Paper } from "@mui/material"
 import { Message } from "../../types/class/Message"
 import { MessageContainer } from "./MessageContainer"
 

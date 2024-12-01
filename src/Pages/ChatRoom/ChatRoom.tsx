@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { Box, Paper, TextField } from "@mui/material"
+import React, { useEffect } from "react"
+import { Box } from "@mui/material"
 import { useLocation } from "react-router-dom"
 import { useChat } from "../../hooks/useChat"
 import { ChatHeader } from "./ChatHeader"
@@ -11,8 +11,6 @@ interface ChatRoomProps {}
 export const ChatRoom: React.FC<ChatRoomProps> = ({}) => {
     const location = useLocation()
     const { chat, messages, checkUser, onLeaveChat, sendMessage } = useChat(location.state.chat)
-
-    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         console.log(chat)

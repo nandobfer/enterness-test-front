@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Chip } from "@mui/material"
+import { Chip } from "@mui/material"
 import { formatDate } from "../tools/formatDate"
 
 interface DateChipProps {
