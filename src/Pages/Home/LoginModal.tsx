@@ -79,7 +79,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({}) => {
                         slotProps={{
                             input: {
                                 endAdornment: checking ? (
-                                    <CircularProgress size="1.5rem" />
+                                    <CircularProgress color="primary" size="1.5rem" />
                                 ) : error ? (
                                     <Error color="error" />
                                 ) : valid ? (
