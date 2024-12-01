@@ -36,7 +36,9 @@ export const ChatListItem: React.FC<ChatListItemProps> = ({ chat: initialChat })
                 lastMessage ? (
                     <Box sx={{ gap: "0.5vw" }}>
                         <Typography sx={{ color: "primary.main" }}>{lastAuthor}:</Typography>
-                        <Typography sx={{ width: "35vw", overflow: "hidden", textOverflow: "ellipsis" }}>{lastMessage.body}</Typography>
+                        <Typography sx={{ width: "35vw", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {lastMessage.body}
+                        </Typography>
                     </Box>
                 ) : (
                     "Nenhuma mensagem"
