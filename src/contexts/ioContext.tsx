@@ -39,6 +39,10 @@ export const IoProvider: React.FC<IoProviderProps> = ({ children }) => {
             }
         })
 
+        io.onAny((...args) => {
+            console.log(args)
+        })
+
         return () => {
             io.off("connect_error")
             io.off("connect")

@@ -7,8 +7,9 @@ export declare class UsersService {
     constructor(eventEmitter: EventEmitter2);
     new(data: UserForm): Promise<User>;
     login(data: UserForm, socket: Socket): Promise<User>;
-    getAll(): Promise<User[]>;
+    getAll(): User[];
     find(attribute: "id" | "username", value: string): Promise<User | null>;
     isOnline(username: string): User;
+    findOnline(id: string): User;
     logout(socket: Socket): void;
 }

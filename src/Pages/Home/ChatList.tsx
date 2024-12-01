@@ -51,7 +51,11 @@ export const ChatList: React.FC<ChatListProps> = ({}) => {
             <ChatFormContainer onSuccess={addChat} />
 
             <Box sx={{ flex: 2 / 3, flexDirection: "column", gap: "1vw", overflowY: "auto", maxHeight: "87vh", margin: "-2vw 0", padding: "2vw 0" }}>
-                {loading ? <LinearProgress variant="indeterminate" sx={{}} /> : chats.map((chat) => <ChatListItem key={chat.id} chat={chat} />)}
+                {loading ? (
+                    <LinearProgress variant="indeterminate" sx={{}} />
+                ) : (
+                    chats.sort((a, b) => Number(a.createdAt) - Number(b.createdAt)).map((chat) => <ChatListItem key={chat.id} chat={chat} />)
+                )}
             </Box>
         </Box>
     )

@@ -78,6 +78,7 @@ img {
 
   ::selection {
     color: white;
+    background: #2863ff
 }
 
 .link {

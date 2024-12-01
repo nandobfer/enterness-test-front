@@ -1,11 +1,14 @@
-import { Message } from "./Message";
+import { Message, MessageForm } from "./Message";
 import { User } from "./User";
 import { Prisma } from "@prisma/client";
 export declare const chat_prisma_include: {
     users: true;
-    messages: true;
+    messages: {
+        orderBy: {
+            createdAt: "asc";
+        };
+    };
     owner: true;
-    lastMessage: true;
 };
 export type ChatPrisma = Prisma.ChatGetPayload<{
     include: typeof chat_prisma_include;
@@ -25,8 +28,10 @@ export declare class Chat {
     messages: Message[];
     owner: User;
     users: User[];
+    createdAt: string;
     lastMessage?: Message;
     password?: string;
     constructor(data: ChatPrisma);
-    handleOwnerLeave(): void;
+    registerUser(user: User): Promise<void>;
+    newMessage(data: MessageForm): Promise<Message>;
 }

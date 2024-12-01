@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import { Chat, ChatJoinForm } from "../types/class/Chat"
 import { useEffect, useState } from "react"
-import { Message } from "../types/class/Message"
+import { Message, MessageForm } from "../types/class/Message"
 import { useIo } from "./useIo"
 import { useUser } from "./useUser"
 import { api } from "../backend"
+import { uid } from "uid"
 
 export const useChat = (initialChat: Chat) => {
     const navigate = useNavigate()
@@ -12,6 +13,8 @@ export const useChat = (initialChat: Chat) => {
     const { user } = useUser()
 
     const [chat, setChat] = useState(initialChat)
+    const [messages, setMessages] = useState<Message[]>(chat.messages)
+    const [lastMessage, setLastMessage] = useState<Message | undefined>(chat.lastMessage)
 
     const join = (chat: Chat) => {
         navigate(`/chat?id=${chat.id}`, { state: { chat } })
@@ -23,9 +26,8 @@ export const useChat = (initialChat: Chat) => {
     }
 
     const addMessage = (message: Message) => {
-        const newChat = chat
-        newChat.messages.push(message)
-        setChat(newChat)
+        setMessages((messages) => [...messages, message])
+        setLastMessage(message)
     }
 
     const checkUser = () => {
@@ -40,15 +42,33 @@ export const useChat = (initialChat: Chat) => {
         return response.data
     }
 
+    const sendMessage = async (text: string) => {
+        if (!user.current) return
+
+        const data: MessageForm = {
+            id: uid(),
+            body: text,
+            chat_id: chat.id,
+            user_id: user.current.id,
+        }
+
+        io.emit("chat:message", data)
+    }
+
     useEffect(() => {
+        setMessages(chat.messages)
         io.on("chat:message", (message: Message) => {
             addMessage(message)
         })
+
+        return () => {
+            io.off("chat:message")
+        }
     }, [chat])
 
     useEffect(() => {
         setChat(initialChat)
     }, [initialChat])
 
-    return { join, chat, checkUser, onLeaveChat }
+    return { join, chat, checkUser, onLeaveChat, sendMessage, messages, lastMessage }
 }
