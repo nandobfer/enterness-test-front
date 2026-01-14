@@ -2,14 +2,12 @@ import { useNavigate } from "react-router-dom"
 import { Chat, ChatJoinForm } from "../types/class/Chat"
 import { useEffect, useState } from "react"
 import { Message, MessageForm } from "../types/class/Message"
-import { useIo } from "./useIo"
 import { useUser } from "./useUser"
 import { api } from "../backend"
 import { uid } from "uid"
 
 export const useChat = (initialChat: Chat) => {
     const navigate = useNavigate()
-    const io = useIo()
     const { user } = useUser()
 
     const [chat, setChat] = useState(initialChat)

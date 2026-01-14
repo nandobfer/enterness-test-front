@@ -1,5 +1,64 @@
-import axios from "axios";
+import axios from "axios"
+
+export interface WebTokens {
+    access_token: string
+    refresh_token: string
+}
+
+export interface JwtPayload {
+    iat: number
+    exp: number
+}
+
+export interface JwtWithTokens {
+    access_token: JwtPayload & { token: string }
+    refresh_token: JwtPayload & { token: string }
+}
 
 export const hostname = "localhost:8105"
 
-export const api = axios.create({baseURL: `http://${hostname}`})
+export const api = axios.create({ baseURL: `http://${hostname}` })
+
+export const refreshToken = async (refresh_token: string) => {
+    try {
+        const response = await api.post<WebTokens>("/auth/refresh", { refresh_token })
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const handleInterceptions = async (
+    jwt: React.MutableRefObject<JwtWithTokens | null>,
+    refreshTokenFn: (tokens: WebTokens) => void,
+    logout: () => void
+) => {
+    api.interceptors.request.use(async (config) => {
+        if (!jwt.current) return config
+
+        console.log("INTERCEPTANDO REQUISIÇÃO COM JWT")
+        if (Date.now() >= jwt.current.access_token.exp * 1000) {
+            if (Date.now() >= jwt.current.refresh_token.exp * 1000) {
+                console.log("REFRESH TOKEN EXPIRADO, DESLOGANDO USUÁRIO")
+                logout()
+                return config
+            }
+
+            console.log("ACCESS TOKEN EXPIRADO, SOLICITANDO NOVO TOKEN")
+            api.interceptors.request.clear()
+            const newTokens = await refreshToken(jwt.current.refresh_token.token)
+            if (newTokens) {
+                console.log("NOVO TOKEN RECEBIDO")
+                refreshTokenFn(newTokens)
+            }
+        }
+
+        if (config.headers) {
+            console.log("ADICIONANDO TOKEN NO HEADER")
+            config.headers["Authorization"] = `Bearer ${jwt.current?.access_token.token}`
+        }
+
+        console.log(config)
+        return config
+    })
+}

@@ -1,46 +1,44 @@
 import React, { useEffect, useState } from "react"
 import { Box } from "@mui/material"
-import { useUser } from "../../../hooks/useUser"
-import { Chat } from "../../../types/class/Chat"
 import { ChatItem } from "./UserChatItem"
-import { useIo } from "../../../hooks/useIo"
 import { useSearchParams } from "react-router-dom"
+import { useUser } from "../../../hooks/useUser"
+import { RoomDto } from "../../../types/src/rooms/rooms.entity"
 
 interface UserChatsProps {}
 
 export const UserChats: React.FC<UserChatsProps> = ({}) => {
     const [searchParams] = useSearchParams()
     const current_chat_id = searchParams.get("id")
-    const { user } = useUser()
-    const io = useIo()
+    const { dto } = useUser()
 
-    const [chats, setChats] = useState<Chat[]>([])
+    const [chats, setChats] = useState<RoomDto[]>([])
 
-    const addChat = (chat: Chat) => setChats((chats) => [...chats.filter((item) => item.id !== chat.id), chat])
+    const addChat = (chat: RoomDto) => setChats((chats) => [...chats.filter((item) => item.id !== chat.id), chat])
     const removeChat = (chat_id: string) => setChats((chats) => chats.filter((item) => item.id !== chat_id))
 
     const fetchChats = async () => {
         try {
-            const chats = await user.getChats()
+            // const chats = await dto.getChats()
             setChats(chats)
         } catch (error) {
             console.log(error)
         }
     }
 
-    useEffect(() => {
-        if (user.current) {
-            fetchChats()
+    // useEffect(() => {
+    //     if (dto) {
+    //         fetchChats()
 
-            io.on("chats:join", (chat: Chat) => addChat(chat))
-            io.on("chats:unjoin", (chat_id: string) => removeChat(chat_id))
+    //         io.on("chats:join", (chat: RoomDto) => addChat(chat))
+    //         io.on("chats:unjoin", (chat_id: string) => removeChat(chat_id))
 
-            return () => {
-                io.off("chats:join")
-                io.off("chats:unjoin")
-            }
-        }
-    }, [user.current])
+    //         return () => {
+    //             io.off("chats:join")
+    //             io.off("chats:unjoin")
+    //         }
+    //     }
+    // }, [user.current])
 
     return (
         <Box sx={{ flexDirection: "column", margin: "0 -2vw" }}>
