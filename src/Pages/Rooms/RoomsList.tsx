@@ -14,7 +14,7 @@ export const RoomsList: React.FC<RoomsListProps> = (props) => {
                 <Typography variant="h6" fontWeight={"bold"}>
                     Enterness Test
                 </Typography>
-                <Button size="small" startIcon={<Add />} variant="contained">
+                <Button size="small" startIcon={<Add />} variant="contained" onClick={() => props.rooms.setRoomFormModal(true)}>
                     nova sala
                 </Button>
             </Box>

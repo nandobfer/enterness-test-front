@@ -19,7 +19,7 @@ export const SignupModal: React.FC<SignupModalProps> = (props) => {
             onClose={props.onClose}
             fullWidth
             maxWidth="sm"
-            PaperProps={{ sx: { bgcolor: "background.default" }, elevation: 4 }}
+            slotProps={{ paper: { sx: { bgcolor: "background.default" }, elevation: 4 } }}
         >
             <Box sx={{ padding: 2, flexDirection: "column", gap: 1 }}>
                 <Title name="Cadastro" onClose={props.onClose} />

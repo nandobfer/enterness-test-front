@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { RoomDto } from "../types/src/rooms/rooms.entity"
 import { api } from "../backend"
+import { useState } from "react"
 
 export const useRooms = () => {
     const { isFetching, data, refetch } = useQuery<RoomDto[]>({
@@ -9,5 +10,7 @@ export const useRooms = () => {
         initialData: [],
     })
 
-    return { isFetching, data, refetch }
+    const [roomFormModal, setRoomFormModal] = useState(false)
+
+    return { isFetching, data, refetch, roomFormModal, setRoomFormModal }
 }
