@@ -4,7 +4,7 @@ import { api, WebTokens } from "../backend"
 import { sleep } from "../tools/sleep"
 import { AxiosError } from "axios"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { userLoginSchema } from "../tools/userFormValidate"
+import { userLoginSchema } from "../schemas/userFormSchema"
 import { useUser } from "./useUser"
 
 export const useLogin = () => {

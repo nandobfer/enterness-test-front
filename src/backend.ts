@@ -28,8 +28,35 @@ export const refreshToken = async (refresh_token: string) => {
     }
 }
 
+const isAccessTokenExpired = (jwt: JwtWithTokens) => {
+    return Date.now() >= jwt.access_token.exp * 1000
+}
+
+const isRefreshTokenExpired = (jwt: JwtWithTokens) => {
+    return Date.now() >= jwt.refresh_token.exp * 1000
+}
+
+export const handleTokenExpiration = async (jwt: JwtWithTokens, refreshTokenFn: (tokens: WebTokens) => void, logout: () => void) => {
+    console.log("VERIFICANDO EXPIRAÇÃO DO TOKEN")
+    if (isAccessTokenExpired(jwt)) {
+        if (isRefreshTokenExpired(jwt)) {
+            console.log("REFRESH TOKEN EXPIRADO, DESLOGANDO USUÁRIO")
+            logout()
+            return
+        }
+
+        console.log("ACCESS TOKEN EXPIRADO, SOLICITANDO NOVO TOKEN")
+        api.interceptors.request.clear()
+        const newTokens = await refreshToken(jwt.refresh_token.token)
+        if (newTokens) {
+            console.log("NOVO TOKEN RECEBIDO")
+            refreshTokenFn(newTokens)
+        }
+    }
+}
+
 export const handleInterceptions = async (
-    jwt: React.MutableRefObject<JwtWithTokens | null>,
+    jwt: React.RefObject<JwtWithTokens | null>,
     refreshTokenFn: (tokens: WebTokens) => void,
     logout: () => void
 ) => {
@@ -37,21 +64,7 @@ export const handleInterceptions = async (
         if (!jwt.current) return config
 
         console.log("INTERCEPTANDO REQUISIÇÃO COM JWT")
-        if (Date.now() >= jwt.current.access_token.exp * 1000) {
-            if (Date.now() >= jwt.current.refresh_token.exp * 1000) {
-                console.log("REFRESH TOKEN EXPIRADO, DESLOGANDO USUÁRIO")
-                logout()
-                return config
-            }
-
-            console.log("ACCESS TOKEN EXPIRADO, SOLICITANDO NOVO TOKEN")
-            api.interceptors.request.clear()
-            const newTokens = await refreshToken(jwt.current.refresh_token.token)
-            if (newTokens) {
-                console.log("NOVO TOKEN RECEBIDO")
-                refreshTokenFn(newTokens)
-            }
-        }
+        await handleTokenExpiration(jwt.current, refreshTokenFn, logout)
 
         if (config.headers) {
             console.log("ADICIONANDO TOKEN NO HEADER")

@@ -1,11 +1,11 @@
 import { useForm, SubmitHandler } from "react-hook-form"
-import { UserFormDto } from "../types/src/users/users.entity"
 import { api } from "../backend"
 import { sleep } from "../tools/sleep"
 import { AxiosError } from "axios"
 import { useLogin } from "./useLogin"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { userSignupSchema } from "../tools/userFormValidate"
+import { userSignupSchema } from "../schemas/userFormSchema"
+import { UserFormDto } from "../types/users/users.entity"
 
 export const useSignup = (login: ReturnType<typeof useLogin>, onClose: () => void) => {
     const {

@@ -3,7 +3,7 @@ import { User } from "../users/users.entity";
 import { Message } from "../messages/messages.entity";
 export declare class RoomFormDto {
     name: string;
-    password: string;
+    password?: string;
     user_id: string;
 }
 export declare class RoomAndUserIdsDto {

@@ -11,7 +11,7 @@ export declare class UsersController {
     constructor(service: UsersService);
     getAll(): Promise<import("./users.entity").User[]>;
     getOnlineUsers(): import("./users.entity").UserDto[];
-    createUser(data: UserFormDto): Promise<import("./users.entity").User>;
+    createUser(data: UserFormDto): Promise<boolean>;
     checkEmail(query: UserQueriesDto): {
         valid: boolean;
     };
