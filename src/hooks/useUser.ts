@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { WebTokens } from "../backend"
 
 export const useUser = () => {
-    const { dto, setDto, jwt, saveTokens, socket } = useContext(UserContext)
+    const { dto, clearData, saveTokens, socket } = useContext(UserContext)
     const navigate = useNavigate()
 
     const onLogin = (tokens: WebTokens) => {
@@ -12,5 +12,10 @@ export const useUser = () => {
         setTimeout(() => navigate("/rooms"))
     }
 
-    return { dto, onLogin, socket }
+    const logout = () => {
+        clearData()
+        navigate("/")
+    }
+
+    return { dto, onLogin, logout, socket }
 }

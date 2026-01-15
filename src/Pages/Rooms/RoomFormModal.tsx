@@ -14,18 +14,25 @@ export const RoomFormModal: React.FC<RoomFormModalProps> = (props) => {
     return (
         <Dialog
             open={props.rooms.roomFormModal}
-            onClose={() => props.rooms.setRoomFormModal(false)}
+            onClose={props.rooms.closeRoomFormModal}
             fullWidth
             maxWidth="sm"
             slotProps={{ paper: { sx: { bgcolor: "background.default" }, elevation: 4 } }}
         >
             <Box sx={{ padding: 2, flexDirection: "column", gap: 2 }}>
-                <Title name="Nova sala" onClose={() => props.rooms.setRoomFormModal(false)} />
+                <Title name="Nova sala" onClose={props.rooms.closeRoomFormModal} />
                 <Typography variant="subtitle2">insira um nome e uma senha para a sala.</Typography>
                 <Divider sx={{ marginBottom: 1 }} />
 
                 <Box component="form" sx={{ flexDirection: "column", gap: 2 }} onSubmit={props.rooms.submitNewRoom}>
-                    <TextField label="nome" fullWidth size="small" {...props.rooms.roomForm.register("name")} />
+                    <TextField
+                        label="nome"
+                        fullWidth
+                        size="small"
+                        {...props.rooms.roomForm.register("name")}
+                        error={!!props.rooms.roomForm.formState.errors.name}
+                        helperText={props.rooms.roomForm.formState.errors.name?.message}
+                    />
                     <TextField
                         label="senha"
                         variant="outlined"
@@ -33,6 +40,8 @@ export const RoomFormModal: React.FC<RoomFormModalProps> = (props) => {
                         size="small"
                         type={showPassword ? "text" : "password"}
                         {...props.rooms.roomForm.register("password")}
+                        error={!!props.rooms.roomForm.formState.errors.password}
+                        helperText={props.rooms.roomForm.formState.errors.password?.message}
                         slotProps={{
                             input: {
                                 endAdornment: (

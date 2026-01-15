@@ -1,14 +1,15 @@
 import { createContext, useEffect, useRef, useState } from "react"
 import React from "react"
 import { io, Socket } from "socket.io-client"
-import { api, handleInterceptions, handleTokenExpiration, hostname, JwtPayload, JwtWithTokens, WebTokens } from "../backend"
+import { api, handleInterceptions, hostname, JwtPayload, JwtWithTokens, WebTokens } from "../backend"
 import { useSnackbar } from "burgos-snackbar"
 import { jwtDecode } from "jwt-decode"
 import { UserDto } from "../types/users/users.entity"
 
 interface UserContextValue {
     dto: UserDto | null
-    setDto: React.Dispatch<React.SetStateAction<UserDto | null>>
+
+    clearData: () => void
 
     jwt: React.RefObject<JwtWithTokens | null>
     saveTokens: (tokens: WebTokens) => void
@@ -33,7 +34,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const saveTokens = (tokens: WebTokens) => {
         const decrypedAccessToken = jwtDecode<JwtPayload & { user: UserDto }>(tokens.access_token)
         const decrypedRefreshToken = jwtDecode<JwtPayload & { user: UserDto }>(tokens.refresh_token)
-        console.log(decrypedAccessToken)
         jwt.current = {
             access_token: { token: tokens.access_token, iat: decrypedAccessToken.iat, exp: decrypedAccessToken.exp },
             refresh_token: { token: tokens.refresh_token, iat: decrypedRefreshToken.iat, exp: decrypedRefreshToken.exp },
@@ -52,19 +52,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         })
 
         socket.on("connect", () => {
-            // snackbar({ severity: "success", text: "Conectado com o servidor" })
+            snackbar({ severity: "success", text: "Conectado com o servidor" })
         })
 
         socket.on("disconnect", (reason) => {
             if (reason == "io client disconnect" || reason == "io server disconnect") {
-                // snackbar({ severity: "info", text: "Desconectado do servidor" })
+                snackbar({ severity: "info", text: "Desconectado do servidor" })
             } else {
                 snackbar({ severity: "error", text: "Conexão com o servidor perdida! Tentando reconectar automaticamente" })
             }
-        })
-
-        socket.onAny((...args) => {
-            console.log(args)
         })
 
         return socket
@@ -73,6 +69,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const clearData = () => {
         jwt.current = null
         setDto(null)
+        socket.disconnect()
     }
 
     useEffect(() => {
@@ -101,7 +98,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         <UserContext.Provider
             value={{
                 dto,
-                setDto,
+                clearData,
                 jwt,
                 saveTokens,
                 socket,

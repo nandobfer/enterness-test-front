@@ -9,6 +9,7 @@ export declare class UserFormDto {
 export declare class UserDto {
     id: string;
     email: string;
+    username: string;
 }
 export declare class User extends BaseEntity {
     id: string;

@@ -36,20 +36,16 @@ const isRefreshTokenExpired = (jwt: JwtWithTokens) => {
     return Date.now() >= jwt.refresh_token.exp * 1000
 }
 
-export const handleTokenExpiration = async (jwt: JwtWithTokens, refreshTokenFn: (tokens: WebTokens) => void, logout: () => void) => {
-    console.log("VERIFICANDO EXPIRAÇÃO DO TOKEN")
+const handleTokenExpiration = async (jwt: JwtWithTokens, refreshTokenFn: (tokens: WebTokens) => void, logout: () => void) => {
     if (isAccessTokenExpired(jwt)) {
         if (isRefreshTokenExpired(jwt)) {
-            console.log("REFRESH TOKEN EXPIRADO, DESLOGANDO USUÁRIO")
             logout()
             return
         }
 
-        console.log("ACCESS TOKEN EXPIRADO, SOLICITANDO NOVO TOKEN")
         api.interceptors.request.clear()
         const newTokens = await refreshToken(jwt.refresh_token.token)
         if (newTokens) {
-            console.log("NOVO TOKEN RECEBIDO")
             refreshTokenFn(newTokens)
         }
     }
@@ -63,15 +59,12 @@ export const handleInterceptions = async (
     api.interceptors.request.use(async (config) => {
         if (!jwt.current) return config
 
-        console.log("INTERCEPTANDO REQUISIÇÃO COM JWT")
         await handleTokenExpiration(jwt.current, refreshTokenFn, logout)
 
         if (config.headers) {
-            console.log("ADICIONANDO TOKEN NO HEADER")
             config.headers["Authorization"] = `Bearer ${jwt.current?.access_token.token}`
         }
 
-        console.log(config)
         return config
     })
 }
