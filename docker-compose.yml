@@ -7,7 +7,4 @@ services:
     ports:
       - "8084:8084"
     restart: unless-stopped
-
-networks:
-  default:
-    name: enterness_test_network
+    
