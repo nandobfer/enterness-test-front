@@ -26,6 +26,14 @@ envio e recebimento de mensagens
  
  > não escrevi os testes manualmente, uso o copilot para automatizar essa tarefa há um bom tempo
 
+acabei desenvolvendo vários outros recursos e detalhes não solicitados, prezando pela qualidade:
++ ordenação de salas e mensagens com base no horário (de envio / criação)
++ salas públicas e privadas
++ senhas de usuários e salas com hash utilizando bcrypt
++ filtro e busca de salas
++ design do chat extremamente moderno e intuitivo
++ access_token com expiração de 5m e é renovado com um refresh_token que expira em 1h (mas também é renovado)
+
 ## 🎯 Objetivo
 - [x] Backend (API + WebSocket): NestJS + MariaDB.
 - [x] Frontend (SPA): React + Vite + ~~TailwindCSS~~ MUI. 
