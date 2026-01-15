@@ -1,50 +1,22 @@
-# React + TypeScript + Vite
+# Desafio FullStack Senior - Fernando Burgos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> O README.md do projeto deve conter:
+> + Instruções claras de como rodar (focadas no Docker).
+> + Explicar por que escolheu tais bibliotecas no Frontend.
+> + Prints ou GIF da aplicação rodando.
 
-Currently, two official plugins are available:
+## Como rodar
+apenas executar `docker compose up` no repositório da api ou do frontend para iniciar os 3 containers (mariadb, backend e frontend)
+> se já possuir um container com o nome mariadb rodando, pode ser necessário remover primeiro
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## bibliotecas no Frontend
+decidi user MUI (Material Design) por seus componentes battleproof, praticidade e design intuitivo, pois é o padrão de design da Google, além de ser uma biblioteca que eu já tenho muita proficiência, então ajudou no tempo de desenvolvimento
 
-## Expanding the ESLint configuration
+## aplicação rodando
+<img width="1920" height="1020" alt="Captura de tela 2026-01-15 023953" src="https://github.com/user-attachments/assets/0a8644b3-c039-4d55-8be8-7677ad736f58" />
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+login/cadastro
+![video1](https://github.com/user-attachments/assets/d4476047-5a88-4c84-822a-e76f54a1b51e)
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+envio e recebimento de mensagens
+![video2](https://github.com/user-attachments/assets/a94ee53e-c66a-4db5-9be0-03b8e55630b2)
