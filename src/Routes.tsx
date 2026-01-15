@@ -15,10 +15,7 @@ export interface RouteItem {
     id: string
 }
 
-export const routes: RouteItem[] = [
-    { path: "/", index: true, element: <Home />, label: "Início", id: "home" },
-    { path: "*", element: <Home />, label: "Não encontrado", id: "not-found" },
-]
+export const routes: RouteItem[] = [{ path: "/", index: true, element: <Home />, label: "Início", id: "home" }]
 
 export const authenticatedRoutes: RouteItem[] = [{ path: "/rooms/:id?", element: <RoomsPage />, label: "Salas", id: "rooms" }]
 
@@ -29,10 +26,10 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
         <ReactRoutes>
             {user.dto && authenticatedRoutes.map((route) => <Route key={route.path} path={route.path} index={route.index} element={route.element} />)}
 
-            {/* <Route path="*" element={<NotFound />} /> */}
             {routes.map((route) => (
                 <Route key={route.path} path={route.path} index={route.index} element={route.element} />
             ))}
+            <Route path="*" element={<NotFound />} />
         </ReactRoutes>
     )
 }

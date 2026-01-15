@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Box, Button, Dialog, Divider, IconButton, LinearProgress, TextField, Typography } from "@mui/material"
-import { RoomDto } from "../../../types/rooms/rooms.entity"
 import { useJoinRoom } from "../../../hooks/useJoinRoom"
 import { useRooms } from "../../../hooks/useRooms"
 import { Title } from "../../../components/Title"

@@ -17,7 +17,7 @@ export const useSignup = (login: ReturnType<typeof useLogin>, onClose: () => voi
 
     const onSubmit: SubmitHandler<UserFormDto> = async (data) => {
         try {
-            const response = await api.post("/users", data)
+            await api.post("/users", data)
             onClose()
             login.setValue("email", data.email)
             login.setValue("password", data.password)

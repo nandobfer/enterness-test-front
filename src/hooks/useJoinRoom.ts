@@ -17,7 +17,7 @@ export const useJoinRoom = (room: RoomDto | null, closeModal: () => void) => {
 
     const submitForm = handleSubmit(async (data) => {
         if (!room || !user.dto) return
-        return new Promise<void>((resolve, reject) => {
+        return new Promise<void>((resolve) => {
             data.room_id = room.id
             data.user_id = user.dto!.id
 

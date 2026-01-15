@@ -1,4 +1,4 @@
-import { Box, CircularProgress, IconButton, lighten, Typography, useMediaQuery } from "@mui/material"
+import { Box, CircularProgress, IconButton, lighten, Typography } from "@mui/material"
 import { Close, Refresh } from "@mui/icons-material"
 import { useMuiTheme } from "../hooks/useMuiTheme"
 
@@ -6,12 +6,10 @@ export const Title: React.FC<{
     name: string
     right?: React.ReactNode
     left?: React.ReactNode
-    space?: boolean
-    center?: boolean
     refresh?: () => void
     refreshing?: boolean
     onClose?: () => void
-}> = ({ name, right, left, space, center, refresh, refreshing, onClose }) => {
+}> = ({ name, right, left, refresh, refreshing, onClose }) => {
     const theme = useMuiTheme()
 
     return (

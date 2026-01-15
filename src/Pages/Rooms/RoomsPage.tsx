@@ -10,7 +10,7 @@ import { NoRoomSelected } from "./NoRoomSelected"
 
 interface RoomsPageProps {}
 
-export const RoomsPage: React.FC<RoomsPageProps> = (props) => {
+export const RoomsPage: React.FC<RoomsPageProps> = (_) => {
     const { id } = useParams()
     const rooms = useRooms(id)
 

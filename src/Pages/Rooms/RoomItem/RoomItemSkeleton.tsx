@@ -4,7 +4,7 @@ import { Group } from "@mui/icons-material"
 
 interface RoomItemSkeletonProps {}
 
-export const RoomItemSkeleton: React.FC<RoomItemSkeletonProps> = (props) => {
+export const RoomItemSkeleton: React.FC<RoomItemSkeletonProps> = (_) => {
     return (
         <Paper sx={{ flex: 1, padding: 2, borderRadius: 3, gap: 2, alignItems: "center" }} elevation={0}>
             <Avatar sx={{ bgcolor: "transparent" }}>

@@ -20,7 +20,6 @@ export const MessagesList: React.FC<MessagesListProps> = (props) => {
                 itemContent={(index, message) => {
                     const previous_message = messages[index - 1]
                     const next_message = messages[index + 1]
-                    const is_first = !previous_message
                     const is_last = !next_message
                     // ! mostrando horário caso a diferença entre a mensagem e a anterior ultrapasse 5 minutos
                     const show_datetime =
