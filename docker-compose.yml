@@ -1,4 +1,4 @@
-name: enterness_test
+name: enterness_test_api
 
 services:
   app:
@@ -7,4 +7,50 @@ services:
     ports:
       - "8084:8084"
     restart: unless-stopped
-    
+
+  api:
+    image: nandoburgos/enterness_test.api
+    container_name: enterness_test.api
+    environment:
+      - PORT=8105
+      - DB_HOST=db
+      - DB_USER=enterness
+      - DB_PASSWORD=UmaSenhaMuitoForte
+      - DB_NAME=enterness_test
+      - DB_PORT=3306
+    ports:
+      - "8105:8105"
+    depends_on:
+      - db
+    restart: unless-stopped
+    volumes:
+      - static_volume:/app/static
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '1.5'
+    #       memory: 1512M
+
+  db:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      - MARIADB_DATABASE=enterness_test
+      - MARIADB_USER=enterness
+      - MARIADB_PASSWORD=UmaSenhaMuitoForte
+      - MARIADB_ROOT_PASSWORD=UmaSenhaMuitoForte
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    ports:
+      - "4306:3306"
+    restart: unless-stopped
+
+volumes:
+  static_volume:
+    name: "enterness_test_static_files"
+  mariadb-data:
+    name: "enterness_test_mariadb_data"
+
+networks:
+  default:
+    name: enterness_test_network
